@@ -1,19 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { apiSlice } from '../app/api/apiSlice'
 
-export const notesApi = createApi({
+export const notesApi = apiSlice.injectEndpoints({
     reducerPath: "notesApi",
     tagTypes: ["Notes"],
-    baseQuery: fetchBaseQuery({
-        baseUrl: `${process.env.REACT_APP_BASE_URL}api/v1`,
-        // credentials: 'include',
-        prepareHeaders: (headers, { getState }) => {
-            // const token = getState().auth.token;
-            headers.set('authorization', `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`);
-            return headers;
-        },
-    }),
+
     endpoints: (builder) => ({
         getAllNotes: builder.query({
+            keepUnusedDataFor: 1,
             query: () => `users/get-notes`,
             transformResponse: (res, meta, error) => res.data,
             providesTags: ['Notes'],
@@ -35,7 +29,7 @@ export const notesApi = createApi({
             transformResponse: (res, meta, error) => res.data,
             invalidatesTags: ['Notes'],
         }),
-        sendNotification: builder.mutation({
+        subscribe: builder.mutation({
             query: (subscription) => ({
                 url: `users/subscribe`,
                 method: "POST",
@@ -51,5 +45,5 @@ export const {
     useGetAllNotesQuery,
     useDeleteNoteMutation,
     useSendNoteMutation,
-    useSendNotificationMutation,
+    useSubscribeMutation,
 } = notesApi

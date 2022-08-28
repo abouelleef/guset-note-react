@@ -14,11 +14,17 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { Slide, useScrollTrigger } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../features/authSlice";
+import { useLogoutMutation } from "../features/authApiSlice";
+import { useDispatch } from "react-redux";
 
 const pages = ["Send Note"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Logout"];
 
 const ResponsiveAppBar = () => {
+  const [logoutRequest] = useLogoutMutation();
+  const dispatch = useDispatch();
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -33,8 +39,11 @@ const ResponsiveAppBar = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = async () => {
     setAnchorElUser(null);
+    dispatch(logout());
+    await logoutRequest();
+    navigate("/signin");
   };
 
   const trigger = useScrollTrigger({
@@ -61,6 +70,7 @@ const ResponsiveAppBar = () => {
                 letterSpacing: ".3rem",
                 color: "inherit",
                 textDecoration: "none",
+                cursor: "pointer",
               }}
             >
               LOGO
@@ -126,7 +136,7 @@ const ResponsiveAppBar = () => {
               {pages.map((page) => (
                 <Button
                   key={page}
-                  onClick={handleCloseNavMenu}
+                  onClick={() => navigate("/send-note")}
                   sx={{ my: 2, color: "white", display: "block" }}
                 >
                   {page}

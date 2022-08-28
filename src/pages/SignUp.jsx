@@ -10,22 +10,26 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme } from "@mui/material/styles";
 import Copyright from "../components/Copyright";
-import { Link } from "react-router-dom";
-
-const theme = createTheme();
+import { Link, useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "../features/authApiSlice";
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const [register] = useRegisterMutation();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const body = {
       name: data.get("name"),
       email: data.get("email"),
       password: data.get("password"),
       confirmPassword: data.get("confirmPassword"),
-    });
+    };
+
+    await register({ ...body });
+    navigate("/");
   };
 
   return (

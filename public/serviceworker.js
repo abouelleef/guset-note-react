@@ -1,12 +1,16 @@
 'use strict'
 
+console.log("Hello from service worker")
+
 self.addEventListener('push', function (event) {
     const data = JSON.parse(event.data.text())
     event.waitUntil(
-        registration.showNotification(data.title, {
+        registration.showNotification(
+            data.title, {
             body: data.message,
             icon: '/icons/android-chrome-192x192.png'
-        })
+        }
+        )
     )
 })
 

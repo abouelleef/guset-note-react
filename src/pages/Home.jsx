@@ -1,9 +1,16 @@
 import { Container } from "@mui/material";
+import { useEffect, useState } from "react";
 import NoteList from "../components/NoteList";
-import { useGetAllNotesQuery } from "../services/notesApi";
+import {
+  useGetAllNotesQuery,
+  useSubscribeMutation,
+} from "../services/notesApi";
 
 function Home() {
-  const { data, error, isLoading } = useGetAllNotesQuery("bulbasaur");
+  const { data, error, isLoading } = useGetAllNotesQuery();
+
+  const [subscribeMutation] = useSubscribeMutation();
+
   if (isLoading) {
     return <p>Loading</p>;
   }

@@ -8,6 +8,7 @@ import { ThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
 import theme from './theme';
+import serviceWorkerDev from './serviceWorkerDev';
 
 
 const container = document.getElementById('root');
@@ -29,3 +30,5 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
+
+// serviceWorkerDev();
