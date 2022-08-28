@@ -23,30 +23,30 @@ export default async function serviceWorkerDev() {
         );
         console.log({ registration });
 
-        const subscription = await registration.pushManager.getSubscription();
-        console.log({ subscription });
+        // const subscription = await registration.pushManager.getSubscription();
+        // console.log({ subscription });
 
-        if (!subscription) {
-            const subscription = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: base64ToUint8Array(WEB_PUSH_PUBLIC_KEY),
-            });
-        }
-        if (Notification.permission === "granted") {
+        // if (!subscription) {
+        //     const subscription = await registration.pushManager.subscribe({
+        //         userVisibleOnly: true,
+        //         applicationServerKey: base64ToUint8Array(WEB_PUSH_PUBLIC_KEY),
+        //     });
+        // }
+        // if (Notification.permission === "granted") {
 
 
 
-            const response = await fetch(`${BASE_URL}api/v1/users/subscribe`, {
-                method: 'POST', // or 'PUT'
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(subscription),
-            })
-            const data = await response.json()
-            console.log(data)
+        //     const response = await fetch(`${BASE_URL}api/v1/users/subscribe`, {
+        //         method: 'POST', // or 'PUT'
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(subscription),
+        //     })
+        //     const data = await response.json()
+        //     console.log(data)
 
-        }
+        // }
 
 
     } catch (error) {
